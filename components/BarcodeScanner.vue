@@ -37,7 +37,6 @@ onMounted(async () => {
     // Define a callback for results.
     cvRouter.addResultReceiver({
       onDecodedBarcodesReceived: (result) => {
-        console.log(result);
         emit("scanned",result.barcodeResultItems);
       }
     });
@@ -70,6 +69,7 @@ const startScanning = async () => {
 
 // dispose cvRouter when it's no longer needed
 onBeforeUnmount(async () => {
+  console.log("disposing...");
   try {
     cvRouter?.dispose();
     cameraEnhancer?.dispose();

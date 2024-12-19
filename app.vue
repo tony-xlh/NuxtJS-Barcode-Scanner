@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <h2>Barcode Scanner in Nuxt.js</h2>
-    <div v-if="!initialized">Initializing...</div>
+    <button @click="toggleMounted">{{ mounted ? "Unmount":"Mount" }}</button>
     <button v-if="initialized" @click="toggleScanning">{{ scanning ? "Stop Scanning":"Start Scanning" }}</button>
-    <div class="container">
+    <span v-if="!initialized">Initializing...</span>
+    <div class="container" v-if="mounted">
       <ClientOnly fallback-tag="span" fallback="Loading barcode scanner...">
         <BarcodeScanner ref="scanner" @initialized="onInitialized" @scanned="onScanned"></BarcodeScanner>
       </ClientOnly>
@@ -25,6 +26,7 @@ const scanner = ref();
 const initialized = ref(false);
 const scanning = ref(false);
 const scannedBarcodes = ref<BarcodeResultItem[]>([])
+const mounted = ref(true);
 const onInitialized = () => {
   initialized.value = true;
 }
@@ -36,14 +38,24 @@ const onScanned = (barcodes:BarcodeResultItem[]) => {
 }
 
 const toggleScanning = () => {
-  scanning.value = !scanning.value;
   if (scanner.value) {
+    scanning.value = !scanning.value;
     if (scanning.value) {
       scanner.value.start();
     }else{
       scanner.value.stop();
     }
+  }else{
+    alert("Not mounted");
   }
+}
+
+const toggleMounted = () => {
+  if (!mounted.value === true) {
+    initialized.value = false;
+  }
+  scanning.value = false;
+  mounted.value = !mounted.value;
 }
 
 </script>
