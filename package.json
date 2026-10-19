@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "dynamsoft-barcode-reader-bundle": "^10.4.2002",
+    "dynamsoft-barcode-reader-bundle": "^11.6.3200",
     "nuxt": "^3.14.1592",
     "vue": "latest",
     "vue-router": "latest"
